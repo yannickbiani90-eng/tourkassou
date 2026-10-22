@@ -1,0 +1,24 @@
+{
+  "name": "Soukassou Pro",
+  "short_name": "Soukassou",
+  "description": "Super-application SaaS et PWA de gestion, commerce, contrats tactiles, scoring et trésorerie prédictive.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#10b981",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

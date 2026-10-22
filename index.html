@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Soukassou Pro v17.1 - Écosystème Ultime</title>
+    <meta name="theme-color" content="#10b981">
+    <meta name="description" content="Super-application SaaS et PWA Soukassou Pro : Gestion commerciale, PWA offline-first, TPE, Contrats PDF, Scoring de crédit et Trésorerie prédictive.">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { -webkit-tap-highlight-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col justify-between antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-slate-800/90 backdrop-blur border-b border-slate-700 px-4 py-3 flex items-center justify-between shadow-lg">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-emerald-400 flex items-center justify-center font-black text-xl text-white shadow-md shadow-brand-500/20">
+                S
+            </div>
+            <div>
+                <h1 class="text-lg font-bold leading-none tracking-wide text-white">Soukassou <span class="text-brand-500 text-xs font-semibold px-2 py-0.5 rounded bg-brand-500/10 border border-brand-500/30">PRO v17.1</span></h1>
+                <p class="text-xs text-slate-400 mt-0.5">Écosystème SaaS & PWA Ultime</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <span id="network-status" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span class="w-2 h-2 mr-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                En ligne
+            </span>
+            <button onclick="togglePanicLock()" class="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-all" title="Verrouillage d'urgence">
+                <i class="fas fa-lock"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Application Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 space-y-6">
+        
+        <!-- Quick Stats Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-slate-800/60 border border-slate-700/80 p-4 rounded-2xl shadow-sm">
+                <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+                    <span>Trésorerie Prédictive</span>
+                    <i class="fas fa-chart-line text-brand-500"></i>
+                </div>
+                <div class="text-xl md:text-2xl font-bold mt-2 text-white" id="stat-tresorerie">1 850 000 FCFA</div>
+                <span class="text-xs text-emerald-400 font-medium">+12.4% ce mois</span>
+            </div>
+            <div class="bg-slate-800/60 border border-slate-700/80 p-4 rounded-2xl shadow-sm">
+                <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+                    <span>Score Crédit VIP</span>
+                    <i class="fas fa-shield-alt text-amber-500"></i>
+                </div>
+                <div class="text-xl md:text-2xl font-bold mt-2 text-white" id="stat-score">845 / 1000</div>
+                <span class="text-xs text-amber-400 font-medium">Éligibilité Maximale</span>
+            </div>
+            <div class="bg-slate-800/60 border border-slate-700/80 p-4 rounded-2xl shadow-sm">
+                <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+                    <span>Mobile Money Tchad</span>
+                    <i class="fas fa-mobile-alt text-blue-500"></i>
+                </div>
+                <div class="text-xl md:text-2xl font-bold mt-2 text-white">235 68 21 26 27</div>
+                <span class="text-xs text-blue-400 font-medium">Airtel / Moov Actif</span>
+            </div>
+            <div class="bg-slate-800/60 border border-slate-700/80 p-4 rounded-2xl shadow-sm">
+                <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
+                    <span>Statut Offline</span>
+                    <i class="fas fa-database text-purple-500"></i>
+                </div>
+                <div class="text-xl md:text-2xl font-bold mt-2 text-white">Local First</div>
+                <span class="text-xs text-purple-400 font-medium">Synchro Automatique</span>
+            </div>
+        </div>
+
+        <!-- Modules Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Terminal de Vente & Impression -->
+            <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="p-2.5 bg-brand-500/10 text-brand-500 rounded-xl">
+                            <i class="fas fa-print text-xl"></i>
+                        </div>
+                        <h2 class="font-bold text-lg text-white">Impression Bluetooth</h2>
+                    </div>
+                    <p class="text-sm text-slate-400">Émettez des reçus de caisse et factures instantanément sur imprimantes thermiques POS Bluetooth sans fil.</p>
+                </div>
+                <button onclick="connectBluetoothPrinter()" class="mt-4 w-full py-2.5 px-4 bg-brand-600 hover:bg-brand-500 text-white font-medium rounded-xl shadow-lg shadow-brand-600/20 transition-all flex items-center justify-center space-x-2">
+                    <i class="fas fa-bluetooth-b"></i>
+                    <span>Connecter une Imprimante</span>
+                </button>
+            </div>
+
+            <!-- Contrats PDF Signés -->
+            <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="p-2.5 bg-blue-500/10 text-blue-400 rounded-xl">
+                            <i class="fas fa-file-contract text-xl"></i>
+                        </div>
+                        <h2 class="font-bold text-lg text-white">Contrats Tactiles PDF</h2>
+                    </div>
+                    <p class="text-sm text-slate-400">Générez et faites signer électroniquement des contrats de vente à tempérament sur écran tactile.</p>
+                </div>
+                <button onclick="generatePDFContract()" class="mt-4 w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-xl shadow-lg shadow-blue-600/20 transition-all flex items-center justify-center space-x-2">
+                    <i class="fas fa-signature"></i>
+                    <span>Créer un Contrat Signé</span>
+                </button>
+            </div>
+
+            <!-- SoukBot IA Assistante -->
+            <div class="bg-slate-800 border border-slate-700 p-5 rounded-2xl flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="p-2.5 bg-purple-500/10 text-purple-400 rounded-xl">
+                            <i class="fas fa-robot text-xl"></i>
+                        </div>
+                        <h2 class="font-bold text-lg text-white">SoukBot IA & Chat</h2>
+                    </div>
+                    <p class="text-sm text-slate-400">Assistant intelligent pour l'analyse prédictive de la trésorerie et le support client automatisé B2B/B2C.</p>
+                </div>
+                <button onclick="openSoukBot()" class="mt-4 w-full py-2.5 px-4 bg-purple-600 hover:bg-purple-500 text-white font-medium rounded-xl shadow-lg shadow-purple-600/20 transition-all flex items-center justify-center space-x-2">
+                    <i class="fas fa-comments"></i>
+                    <span>Ouvrir le Chat SoukBot</span>
+                </button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800/80 border-t border-slate-700/80 px-4 py-4 text-center text-xs text-slate-400">
+        <p>Soukassou Pro © 2026 — Licence VIP Officielle. Numéro Référentiel Mobile Money : <span class="text-brand-400 font-semibold">23568212627</span></p>
+    </footer>
+
+    <!-- Service Worker Registration Script -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('Soukassou SW v17.1 actif :', reg.scope))
+                    .catch((err) => console.error('Erreur enregistrement SW :', err));
+            });
+        }
+
+        function togglePanicLock() {
+            const pwd = prompt("Saisissez le mot de passe Admin / PIN de déverrouillage :");
+            if (pwd === "28121955@Uy") {
+                alert("Système déverrouillé avec accès Admin VIP.");
+            } else if (pwd !== null) {
+                alert("Code incorrect ! Mode sécurité activé.");
+            }
+        }
+
+        function connectBluetoothPrinter() {
+            if ('bluetooth' in navigator) {
+                navigator.bluetooth.requestDevice({ acceptAllDevices: true })
+                    .then(device => alert("Imprimante connectée : " + device.name))
+                    .catch(error => alert("Connexion Bluetooth annulée ou indisponible."));
+            } else {
+                alert("L'API Web Bluetooth est supportée via l'application mobile Soukassou.");
+            }
+        }
+
+        function generatePDFContract() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("CONTRAT DE VENTE SOUKASSOU PRO v17.1", 20, 20);
+            doc.text("Référence Mobile Money Tchad: 23568212627", 20, 30);
+            doc.text("Statut: Validé et Signé Électriquement", 20, 40);
+            doc.save("Contrat_Soukassou.pdf");
+        }
+
+        function openSoukBot() {
+            alert("SoukBot IA (v17.1) : Votre trésorerie est saine (+12.4%). Aucun impayé détecté.");
+        }
+
+        window.addEventListener('online', () => {
+            const el = document.getElementById('network-status');
+            el.className = "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+            el.innerHTML = '<span class="w-2 h-2 mr-1.5 rounded-full bg-emerald-400 animate-pulse"></span>En ligne';
+        });
+
+        window.addEventListener('offline', () => {
+            const el = document.getElementById('network-status');
+            el.className = "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20";
+            el.innerHTML = '<span class="w-2 h-2 mr-1.5 rounded-full bg-amber-400"></span>Hors-ligne (Offline First)';
+        });
+    </script>
+</body>
+</html>
